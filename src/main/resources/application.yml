@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/code-inside-project
+    username: postgres
+    password: User19cfb4
+
+  jpa:
+    hibernate:
+      ddl-auto: update
