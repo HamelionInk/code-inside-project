@@ -11,4 +11,14 @@ public class PagesController {
         return "homepage";
     }
 
+    @GetMapping("/profile")
+    public String getPersonProfile() {
+        return "profile/person_profile";
+    }
+
+    @GetMapping("/notes")
+    public String getPersonNotes() {
+        return "profile/person_notes";
+    }
+
 }

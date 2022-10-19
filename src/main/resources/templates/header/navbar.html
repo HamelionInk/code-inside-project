@@ -10,7 +10,8 @@
 <div id="navbar" th:fragment="copy">
     <a class="btn" href="/sign_up" sec:authorize="!isAuthenticated()">Регистрация</a>
     <a class="btn" href="/login" sec:authorize="!isAuthenticated()">Войти</a>
-    <a class="btn" sec:authorize="isAuthenticated()">Профиль</a>
+    <a class="btn" href="/notes" sec:authorize="isAuthenticated()">Заметки</a>
+    <a class="btn" href="/profile" sec:authorize="isAuthenticated()">Профиль</a>
     <a class="btn" href="/perform_logout" sec:authorize="isAuthenticated()">Выйти</a>
 </div>
 </body>
