@@ -4,9 +4,12 @@ import com.nikitin.codeinsideproject.util.RoleEnum;
 import com.nikitin.codeinsideproject.util.annonation.PasswordMatches;
 
 import javax.validation.constraints.*;
+import java.util.UUID;
 
 @PasswordMatches
 public class PersonDto {
+
+    private UUID id;
 
     @Size(min = 2, max = 30, message = "Имя пользователя должно содержать от 2 до 30 символов")
     private String username;
@@ -76,5 +79,13 @@ public class PersonDto {
 
     public void setRole(RoleEnum role) {
         this.role = role;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

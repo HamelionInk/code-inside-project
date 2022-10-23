@@ -3,16 +3,16 @@ package com.nikitin.codeinsideproject.controller;
 import com.nikitin.codeinsideproject.dto.PersonDto;
 import com.nikitin.codeinsideproject.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.*;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-@Controller
+@RestController
+@RequestMapping("/person")
 public class PersonController {
 
     private final PersonService personService;
@@ -22,19 +22,25 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @PostMapping("/person/save")
-    public void savePerson() {
-
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> save(@RequestBody @Valid PersonDto personDto) {
+        personService.savePerson(personDto);
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
-    @PostMapping("/person/update")
-    public void updatePerson() {
-
+    // Admin and User
+    @PatchMapping(path = "/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> update(@PathVariable("username") String username, @RequestBody @Valid PersonDto personDto) {
+        personService.updatePerson(username, personDto);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping("/person/delete")
-    public void deletePerson() {
-
+    // Только админ
+    @DeleteMapping(path = "/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> delete(@PathVariable("username") String username) {
+        personService.deletePerson(username);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
+
 
 }
