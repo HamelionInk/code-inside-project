@@ -16,6 +16,8 @@
     <properties>
         <java.version>11</java.version>
         <testcontainers.version>1.17.4</testcontainers.version>
+        <flyway.user>postgres</flyway.user>
+        <flyway.password>User19cfb4</flyway.password>
     </properties>
     <dependencies>
         <dependency>
@@ -80,6 +82,10 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -105,6 +111,16 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>8.5.13</version>
+                <configuration>
+                    <user>${flyway.user}</user>
+                    <password>${flyway.password}</password>
+                    <url>jdbc:postgresql://localhost:5432/code-inside-project</url>
                 </configuration>
             </plugin>
             <plugin>
