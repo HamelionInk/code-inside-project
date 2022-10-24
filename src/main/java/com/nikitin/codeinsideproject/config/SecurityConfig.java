@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/notes/**").permitAll()
                 .antMatchers(HttpMethod.PATCH,"/notes/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/person*", "/notes/**").permitAll()
+                .antMatchers("/spring-security-rest/api/v2/api-docs").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
