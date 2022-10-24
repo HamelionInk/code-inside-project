@@ -1,9 +1,12 @@
 package com.nikitin.codeinsideproject.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nikitin.codeinsideproject.entity.Notes;
 import com.nikitin.codeinsideproject.util.RoleEnum;
 import com.nikitin.codeinsideproject.util.annonation.PasswordMatches;
 
 import javax.validation.constraints.*;
+import java.util.List;
 import java.util.UUID;
 
 @PasswordMatches
@@ -30,8 +33,7 @@ public class PersonDto {
     @Max(value = 100, message = "Возраст должен быть меньше 100")
     private int age;
 
-    public PersonDto() {
-    }
+    private List<Notes> notesList;
 
     public String getUsername() {
         return username;
@@ -87,5 +89,13 @@ public class PersonDto {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public List<Notes> getNotesList() {
+        return notesList;
+    }
+
+    public void setNotesList(List<Notes> notesList) {
+        this.notesList = notesList;
     }
 }
