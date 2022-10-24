@@ -2,8 +2,6 @@ package com.nikitin.codeinsideproject.error;
 
 public class PersonNotFoundException extends RuntimeException{
 
-    private static final long serialVersionUID = 5861310537366287164L;
-
     public PersonNotFoundException() {
         super();
     }

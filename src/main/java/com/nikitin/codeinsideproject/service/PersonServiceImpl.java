@@ -4,6 +4,7 @@ import com.nikitin.codeinsideproject.dto.NotesDto;
 import com.nikitin.codeinsideproject.dto.PersonDto;
 import com.nikitin.codeinsideproject.entity.Notes;
 import com.nikitin.codeinsideproject.entity.Person;
+import com.nikitin.codeinsideproject.error.NotesNotFoundException;
 import com.nikitin.codeinsideproject.error.PersonAlreadyExistException;
 import com.nikitin.codeinsideproject.error.PersonNotFoundException;
 import com.nikitin.codeinsideproject.mapper.NotesMapper;
@@ -46,7 +47,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void deletePerson(String username) {
-        personRepository.delete(personRepository.findByUsername(username));
+        Person person = personRepository.findByUsername(username);
+        if(person == null) {
+            throw new PersonNotFoundException();
+        }
+        personRepository.delete(person);
     }
 
     @Override
@@ -64,7 +69,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<PersonDto> getAllPerson() {
-        return personMapper.allPersonToDto(personRepository.findAll());
+        List<PersonDto> personDtoList = personMapper.allPersonToDto(personRepository.findAll());
+        if(personDtoList == null) {
+            throw new PersonNotFoundException();
+        }
+        return personDtoList;
     }
 
     @Override
@@ -99,6 +108,9 @@ public class PersonServiceImpl implements PersonService {
             throw new PersonNotFoundException("Profile with username" + username + "not found");
         }
         Optional<Notes> notes = notesRepository.findById(UUID.fromString(id));
+        if(!notes.isPresent()) {
+            throw new NotesNotFoundException("Notes not found in this profile");
+        }
         person.removeNotes(notes.get());
         personRepository.flush();
     }
@@ -106,6 +118,9 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<NotesDto> getAllNotes(String username) {
         Person person = personRepository.findByUsername(username);
+        if(person == null) {
+            throw new PersonNotFoundException("Profile with username" + username + "not found");
+        }
         List<Notes> notesList = person.getNotes();
         return notesMapper.allNotesToDto(notesList);
     }

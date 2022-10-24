@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         BindingResult result = ex.getBindingResult();
         GenericResponse bodyOfResponse =
@@ -26,7 +24,6 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
         final BindingResult result = ex.getBindingResult();
         final GenericResponse bodyOfResponse = new GenericResponse(result.getAllErrors(), result.getObjectName());
@@ -34,16 +31,20 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({ PersonAlreadyExistException.class })
-    @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<?> handleUserAlreadyExist(final RuntimeException ex, final WebRequest request) {
         final GenericResponse bodyResponse = new GenericResponse("Person Already Exist with email or username", "UserAlreadyExist");
         return handleExceptionInternal(ex, bodyResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
     @ExceptionHandler({ PersonNotFoundException.class })
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<?> handlePersonNotFound(final RuntimeException ex, final WebRequest request) {
-        final GenericResponse bodyResponse = new GenericResponse("Cant save notes, because profile not found", "PersonNotFound");
+        final GenericResponse bodyResponse = new GenericResponse("Profile not found", "PersonNotFound");
+        return handleExceptionInternal(ex, bodyResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler({ NotesNotFoundException.class })
+    public ResponseEntity<?> handleNotesNotFound(final RuntimeException ex, final WebRequest request) {
+        final GenericResponse bodyResponse = new GenericResponse("Notes not found", "NotesNotFound");
         return handleExceptionInternal(ex, bodyResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 }
