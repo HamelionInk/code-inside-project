@@ -30,10 +30,15 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    //409
     @ExceptionHandler({ PersonAlreadyExistException.class })
     public ResponseEntity<?> handleUserAlreadyExist(final RuntimeException ex, final WebRequest request) {
-        final GenericResponse bodyResponse = new GenericResponse("Email Already Exist", "UserAlreadyExist");
+        final GenericResponse bodyResponse = new GenericResponse("Person Already Exist with email or username", "UserAlreadyExist");
+        return handleExceptionInternal(ex, bodyResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    @ExceptionHandler({ PersonNotFoundException.class })
+    public ResponseEntity<?> handlePersonNotFound(final RuntimeException ex, final WebRequest request) {
+        final GenericResponse bodyResponse = new GenericResponse("Cant save notes, because profile not found", "PersonNotFound");
         return handleExceptionInternal(ex, bodyResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 }

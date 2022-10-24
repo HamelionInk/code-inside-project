@@ -3,6 +3,7 @@ package com.nikitin.codeinsideproject.entity;
 import com.nikitin.codeinsideproject.util.RoleEnum;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -11,9 +12,10 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "person_id")
     private UUID id;
 
-    @Column(name = "username", unique = true)
+    @Column(name = "username")
     private String username;
 
     @Column(name = "password")
@@ -28,6 +30,9 @@ public class Person {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notes> notesList;
 
     public UUID getId() {
         return id;
@@ -75,5 +80,31 @@ public class Person {
 
     public void setRole(RoleEnum role) {
         this.role = role;
+    }
+
+    public List<Notes> getNotesList() {
+        return notesList;
+    }
+
+    public void setNotesList(List<Notes> notesList) {
+        this.notesList = notesList;
+    }
+
+    public List<Notes> getNotes() {
+        return notesList;
+    }
+
+    public void setNotes(List<Notes> notes) {
+        this.notesList = notes;
+    }
+
+    public void addNotes(Notes notes) {
+        notesList.add(notes);
+        notes.setPerson(this);
+    }
+
+    public void removeNotes(Notes notes) {
+        notesList.remove(notes);
+        notes.setPerson(null);
     }
 }

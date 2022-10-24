@@ -1,42 +1,23 @@
-package com.nikitin.codeinsideproject.entity;
+package com.nikitin.codeinsideproject.dto;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GeneratorType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.nikitin.codeinsideproject.entity.Person;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name = "notes")
-public class Notes {
+public class NotesDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO )
-    @Column(name = "id")
     private UUID id;
-
-    @Column(name = "header")
     private String header;
-
-    @Column(name = "version")
     private int version;
-
-    @Column(name = "data_create")
-    @CreationTimestamp
     private LocalDate dataCreate;
-
-    @Column(name = "data_update")
     private LocalDate dataUpdate;
-
-    @Column(name = "text_notes")
     private String textNotes;
-
-    @ManyToOne
-    @NotNull
     @JsonIgnore
     private Person person;
 

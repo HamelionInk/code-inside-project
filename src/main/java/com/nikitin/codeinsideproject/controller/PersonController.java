@@ -3,13 +3,13 @@ package com.nikitin.codeinsideproject.controller;
 import com.nikitin.codeinsideproject.dto.PersonDto;
 import com.nikitin.codeinsideproject.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
-import org.springframework.validation.BindingResult;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/person")
@@ -22,25 +22,27 @@ public class PersonController {
         this.personService = personService;
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAll() {
+        List<PersonDto> responseBody = personService.getAllPerson();
+        return ResponseEntity.ok(responseBody);
+    }
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@RequestBody @Valid PersonDto personDto) {
         personService.savePerson(personDto);
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
-    // Admin and User
     @PatchMapping(path = "/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@PathVariable("username") String username, @RequestBody @Valid PersonDto personDto) {
         personService.updatePerson(username, personDto);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    // Только админ
     @DeleteMapping(path = "/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> delete(@PathVariable("username") String username) {
         personService.deletePerson(username);
         return ResponseEntity.ok(HttpStatus.OK);
     }
-
-
 }
