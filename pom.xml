@@ -102,6 +102,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>2.13.4</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -122,7 +127,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>8.5.13</version>
+                <version>8.2.2</version>
                 <configuration>
                     <user>${flyway.user}</user>
                     <password>${flyway.password}</password>

@@ -2,7 +2,6 @@ package com.nikitin.codeinsideproject.service;
 
 import com.nikitin.codeinsideproject.entity.Person;
 import com.nikitin.codeinsideproject.repository.PersonRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

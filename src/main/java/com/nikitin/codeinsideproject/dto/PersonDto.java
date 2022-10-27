@@ -1,6 +1,5 @@
 package com.nikitin.codeinsideproject.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nikitin.codeinsideproject.entity.Notes;
 import com.nikitin.codeinsideproject.util.RoleEnum;
 import com.nikitin.codeinsideproject.util.annonation.PasswordMatches;

@@ -3,17 +3,19 @@ create table person (
     username VARCHAR(30),
     password VARCHAR(255),
     email VARCHAR(255),
-    age INT8,
+    role VARCHAR,
+    age INT4,
     PRIMARY KEY (person_id)
 );
 
 create table notes (
-    id UUID NOTNULL,
+    id UUID NOT NULL,
     header VARCHAR(255),
     data_create DATE,
     data_update DATE,
+    version INT4,
     text_notes VARCHAR(255),
-    person_id UUID,
+    person_person_id UUID,
     PRIMARY KEY (id),
-    FOREIGN KEY (person_id) REFERENCES person(person_id)
+    FOREIGN KEY (person_person_id) REFERENCES person(person_id)
 );

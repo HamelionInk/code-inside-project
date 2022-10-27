@@ -37,7 +37,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void savePerson(PersonDto personDto) throws PersonAlreadyExistException {
-        if (emailExist(personDto.getEmail()) || usernameExist(personDto.getUsername())) {
+        if (emailExist(personDto.getEmail()) && usernameExist(personDto.getUsername())) {
             throw new PersonAlreadyExistException("There is an account with that email address or username: "
                     + personDto.getEmail() + ", " + personDto.getUsername());
         } else {

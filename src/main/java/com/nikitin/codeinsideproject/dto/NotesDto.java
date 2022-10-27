@@ -1,10 +1,6 @@
 package com.nikitin.codeinsideproject.dto;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.nikitin.codeinsideproject.entity.Person;
 
 import java.time.LocalDate;
@@ -14,12 +10,26 @@ public class NotesDto {
 
     private UUID id;
     private String header;
-    private int version;
+    @JsonIgnore
+    private static int version;
     private LocalDate dataCreate;
     private LocalDate dataUpdate;
     private String textNotes;
     @JsonIgnore
     private Person person;
+
+    public NotesDto() {
+    }
+
+    public NotesDto(UUID id, String header, int version, LocalDate dataCreate, LocalDate dataUpdate, String textNotes, Person person) {
+        this.id = id;
+        this.header = header;
+        NotesDto.version = version;
+        this.dataCreate = dataCreate;
+        this.dataUpdate = dataUpdate;
+        this.textNotes = textNotes;
+        this.person = person;
+    }
 
     public UUID getId() {
         return id;
@@ -74,6 +84,6 @@ public class NotesDto {
     }
 
     public void setVersion(int version) {
-        this.version = version;
+        NotesDto.version = version;
     }
 }

@@ -1,7 +1,6 @@
 package com.nikitin.codeinsideproject.controller;
 
 import com.nikitin.codeinsideproject.dto.PersonDto;
-import com.nikitin.codeinsideproject.entity.Notes;
 import com.nikitin.codeinsideproject.entity.Person;
 import com.nikitin.codeinsideproject.service.PersonService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,7 +52,7 @@ public class PersonController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@RequestBody @Valid PersonDto personDto) {
         personService.savePerson(personDto);
-        return ResponseEntity.ok(HttpStatus.CREATED);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @Operation(summary = "Обновляет информацию о пользователе")
@@ -62,6 +61,8 @@ public class PersonController {
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Person.class)) }),
             @ApiResponse(responseCode = "409", description = "Person already exist with email or username",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Person not found",
                     content = @Content),
             @ApiResponse(responseCode = "400", description = "Not Valid data")})
     @PatchMapping(path = "/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
