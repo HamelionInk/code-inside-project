@@ -1,8 +1,12 @@
+server:
+  port: 8080
+
 spring:
   flyway:
     locations: classpath:/db/migration
     baseline-on-migrate: true
   datasource:
+    driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/code-inside-project
     username: postgres
     password: User19cfb4
