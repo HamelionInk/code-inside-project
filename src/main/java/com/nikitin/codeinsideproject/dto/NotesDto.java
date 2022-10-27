@@ -10,8 +10,7 @@ public class NotesDto {
 
     private UUID id;
     private String header;
-    @JsonIgnore
-    private static int version;
+    private int version;
     private LocalDate dataCreate;
     private LocalDate dataUpdate;
     private String textNotes;
@@ -24,7 +23,7 @@ public class NotesDto {
     public NotesDto(UUID id, String header, int version, LocalDate dataCreate, LocalDate dataUpdate, String textNotes, Person person) {
         this.id = id;
         this.header = header;
-        NotesDto.version = version;
+        this.version = version;
         this.dataCreate = dataCreate;
         this.dataUpdate = dataUpdate;
         this.textNotes = textNotes;
@@ -84,6 +83,6 @@ public class NotesDto {
     }
 
     public void setVersion(int version) {
-        NotesDto.version = version;
+        this.version = version;
     }
 }
