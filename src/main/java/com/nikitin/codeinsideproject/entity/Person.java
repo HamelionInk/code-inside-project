@@ -34,6 +34,19 @@ public class Person {
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Notes> notesList;
 
+    public Person(UUID id, String username, String password, String email, int age, RoleEnum role, List<Notes> notesList) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.age = age;
+        this.role = role;
+        this.notesList = notesList;
+    }
+
+    public Person() {
+    }
+
     public UUID getId() {
         return id;
     }
@@ -88,14 +101,6 @@ public class Person {
 
     public void setNotesList(List<Notes> notesList) {
         this.notesList = notesList;
-    }
-
-    public List<Notes> getNotes() {
-        return notesList;
-    }
-
-    public void setNotes(List<Notes> notes) {
-        this.notesList = notes;
     }
 
     public void addNotes(Notes notes) {

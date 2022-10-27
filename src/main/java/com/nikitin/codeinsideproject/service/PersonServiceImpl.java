@@ -56,15 +56,15 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void updatePerson(String username, PersonDto personDto) {
-        PersonDto personDtoForUpdate = personMapper.personToDto(personRepository.findByUsername(username));
-        if(personDtoForUpdate == null) {
+        Person personForUpdate = personRepository.findByUsername(username);
+        if(personForUpdate == null) {
             throw new PersonNotFoundException("Profile with username" + username + "not found");
         }
-        personDtoForUpdate.setUsername(personDto.getUsername());
-        personDtoForUpdate.setPassword(personDto.getPassword());
-        personDtoForUpdate.setEmail(personDto.getEmail());
-        personDtoForUpdate.setAge(personDto.getAge());
-        personRepository.save(personMapper.dtoToPerson(personDtoForUpdate));
+        personForUpdate.setUsername(personDto.getUsername());
+        personForUpdate.setPassword(personDto.getPassword());
+        personForUpdate.setEmail(personDto.getEmail());
+        personForUpdate.setAge(personDto.getAge());
+        personRepository.save(personForUpdate);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class PersonServiceImpl implements PersonService {
         if(person == null) {
             throw new PersonNotFoundException("Profile with username" + username + "not found");
         }
-        List<Notes> notesList = person.getNotes();
+        List<Notes> notesList = person.getNotesList();
         return notesMapper.allNotesToDto(notesList);
     }
 

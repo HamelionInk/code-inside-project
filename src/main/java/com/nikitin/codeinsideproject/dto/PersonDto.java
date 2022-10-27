@@ -35,6 +35,20 @@ public class PersonDto {
 
     private List<Notes> notesList;
 
+    public PersonDto() {
+    }
+
+    public PersonDto(UUID id, String username, String password, String passwordConfirm, String email, RoleEnum role, int age, List<Notes> notesList) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
+        this.email = email;
+        this.role = role;
+        this.age = age;
+        this.notesList = notesList;
+    }
+
     public String getUsername() {
         return username;
     }

@@ -40,6 +40,21 @@ public class Notes {
     @JsonIgnore
     private Person person;
 
+    public Notes() {
+    }
+
+    public Notes(UUID id, String header, int version, LocalDate dataCreate, LocalDate dataUpdate, String textNotes, Person person) {
+        this.id = id;
+        this.header = header;
+        this.version = version;
+        this.dataCreate = dataCreate;
+        this.dataUpdate = dataUpdate;
+        this.textNotes = textNotes;
+        this.person = person;
+
+
+    }
+
     public UUID getId() {
         return id;
     }
