@@ -1,9 +1,25 @@
+server:
+  port: 8080
+
 spring:
+  flyway:
+    locations: classpath:/db/migration
+    baseline-on-migrate: true
   datasource:
+    driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/code-inside-project
     username: postgres
     password: User19cfb4
 
   jpa:
+    properties:
+      hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
+
+springdoc:
+  api-docs:
+    path: /api-docs
+

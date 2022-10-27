@@ -2,7 +2,7 @@ package com.nikitin.codeinsideproject.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,10 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@SuppressWarnings("deprecation")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers("/css/**");
     }
@@ -25,21 +26,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/anonymous*").anonymous()
-                .antMatchers("/login*").permitAll()
-                .antMatchers("/sign_up/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/person*").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/person/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/notes/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers(HttpMethod.POST, "/notes*").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers(HttpMethod.PATCH,"/person/**", "/notes/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers(HttpMethod.GET, "/person*").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/notes/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/swagger-ui/index.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .defaultSuccessUrl("/swagger-ui/index.html")
                 .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/homepage", true)
                 .failureUrl("/login?error=true")
                 .and()
                 .logout()
                 .logoutUrl("/perform_logout")
-                .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
     }
 
